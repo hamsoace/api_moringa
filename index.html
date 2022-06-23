@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APIs</title>
+</head>
+<body>
+    <fieldset>
+        <legend>Retrieve Users</legend>
+        <input type="text" id="userNameGet" placeholder="Enter User Number.">
+        <button type="button" id="btnGet" onclick="getUserName()">Retrieve</button>
+    </fieldset>
+
+    <script>
+        async function getUserName() {
+            const userName = document.getElementById("userNameGet").value;
+
+            if(userName == "") {
+                alert("Please enter a username");
+                return;
+            }
+             const endpoint = new URL(`https://reqres.in/api/users/${userName}`);
+             // console.log(endpoint);
+
+             endpoint.searchParams.set("token", "YOUR_TOKEN_HERE");
+             //console.log(endpoint.toString());
+
+             const response = await fetch(endpoint, {
+                headers: {
+                    "Authorization": "YOUR_TOKEN_HERE",
+                    "Content-Type": "application/json"
+                }
+             });//awaits response from fetch
+             //console.log(response);
+
+            //  if(response.status == 200) {
+            //      const data = await response.json();
+            //      console.log(data);
+            //      document.getElementById("userNameGet").value = data.data.first_name;
+            //  } else {
+            //      alert("Error: " + response.status);
+            //  }
+
+             //post method to add a new user
+        // const res = await fetch("https://reqres.in/api/users", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify({
+        //         "id":218,
+        //         "first_name": "morpheus",
+        //         "last_name": "matrix",
+        //     })
+        // });
+
+        // if(res.status == 200) {
+        //     const data = await res.json();
+        //     console.log(data);
+        // } else {
+        //     alert("Error: " + res.status);
+
+        // }
+
+        // //put method to update a user
+        const res1 = await fetch("https://reqres.in/api/users/2", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "email": "pauline@mail.com",
+            })
+        });
+
+        if(res1.status == 200) {
+            const data = await res1.json();
+            console.log(data);
+        } else {
+            alert("Error: " + res1.status);
+
+        }
+
+        // //delete method to delete a user
+
+        // const res2 = await fetch("https://reqres.in/api/users/2", {
+        //     method: "DELETE",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     }
+        // });
+
+        // if(res2.status == 200) {
+        //     const data = await res2.json();
+        //     console.log(data);
+        // } else {
+        //     alert("Error: " + res2.status);
+
+        // }
+
+
+    }
+    </script>
+</body>
+</html>
